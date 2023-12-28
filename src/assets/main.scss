@@ -81,7 +81,7 @@ strong {
 
 /* Effects */
 %accentBackground {
-    background-color: var(--color-accent-tr);
+    background-color: var(--color-accent-tr) !important;
     transition: background-color 200ms ease-in-out;
 }
 

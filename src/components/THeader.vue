@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { useGeneralStore } from "@stores/generalStore";
-import TNavbar from "./TNavbar.vue";
+import TNavbar from "@components/TNavbar";
 
 const { navToggle } = useGeneralStore();
 </script>

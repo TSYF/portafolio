@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-    import THeader from "@/components/THeader.vue";
-    import TFooter from "@/components/TFooter.vue";
+    import THeader from "@components/THeader.vue";
+    import TFooter from "@components/sections/TFooter.vue";
 </script>

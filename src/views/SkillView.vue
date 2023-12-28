@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import TIntro from "@components/TIntro.vue";
-import TProjects from "@components/TProjects.vue";
-import { useGeneralStore } from "@stores/generalStore.js";
+import TIntro from "@components/sections/TIntro.vue";
+import TProjects from "@components/sections/TProjects.vue";
+import { useGeneralStore } from "@stores/generalStore";
 
 const { slug } = defineProps<{ slug: string }>();
 

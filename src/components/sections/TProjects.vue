@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { useGeneralStore } from "@stores/generalStore";
-import { type Project } from '../stores/interfaces/project';
+import { type Project } from '@stores/interfaces/project';
 
 const { getSRC } = useGeneralStore();
 

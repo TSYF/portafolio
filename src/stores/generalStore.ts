@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import type { Project, ProjectText } from "./interfaces/project";
-import type { Portfolio } from './interfaces/project';
+import type { Project, ProjectText } from "@stores/interfaces/project";
+import type { Portfolio } from '@stores/interfaces/project';
 
 export const useGeneralStore = defineStore("general", {
     state: () => ({

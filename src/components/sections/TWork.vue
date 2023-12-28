@@ -120,7 +120,7 @@
 
 <script setup lang="ts">
 import { useGeneralStore } from "@stores/generalStore";
-import TCard from "./TCard.vue";
+import TCard from "@components/TCard.vue";
 
 const { getSRC, slugs } = useGeneralStore();
 </script>

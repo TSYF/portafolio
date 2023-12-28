@@ -75,9 +75,6 @@ const styleTemplate = ref(
     border-radius: var(--bd-radius);
     padding: var(--pd);
 }
-</style>
-
-<style>
 div.card > .card__img {
     margin-bottom: var(--gap);
 }
