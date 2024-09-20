@@ -20,11 +20,13 @@
     /* Main Colors */
     --color-light: #fff;
     --color-dark: #303030;
+    // --color-accent: #CC7178;
     --color-accent: #16e0bd;
     /* Transparent colors */
     --color-light-tr: #fff1;
     --color-light-tr-2: #fff7;
     --color-dark-tr: #30303040;
+    // --color-accent-tr: #CC717820;
     --color-accent-tr: #16e0bd20;
 
     --fs-h1: 3rem;
@@ -41,6 +43,10 @@
         --fs-h2: 3.75rem;
         --fs-h3: 1.5rem;
         --fs-body: 1.125rem;
+    }
+
+    .nav {
+        width: 40vw !important;
     }
 }
 
@@ -209,7 +215,7 @@ h3 {
         z-index: 100;
         opacity: 0.9;
         height: 90vh;
-        width: 30vw;
+        width: 100vw;
         border-radius: 0 0 0 20px;
 
         transform: translateX(100%);
