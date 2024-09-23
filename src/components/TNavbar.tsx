@@ -1,7 +1,7 @@
 import { useGeneralStore } from "@stores/generalStore";
 import type { FunctionalComponent } from "vue";
 
-const component: FunctionalComponent = () => {
+const component: FunctionalComponent = async () => {
     const { navToggle } = useGeneralStore();
 
     return <nav class="nav">

@@ -7,6 +7,6 @@ export interface Project {
     download: boolean;
 }
 
-export interface Portfolio { [key: string]: Project[] };
+// export interface Portfolio { [key: string]: Project[] };
 
-export interface ProjectText { subtitle: string, text?: string };
+export interface SkillViewText { subtitle: string, description?: string };

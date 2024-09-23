@@ -1,74 +1,58 @@
 import { defineStore } from "pinia";
-import type { Project, ProjectText } from "@stores/interfaces/project";
-import type { Portfolio } from '@stores/interfaces/project';
 
-export const useGeneralStore = defineStore("general", {
-    state: () => ({
-        slugs: {
-            vue: "vue",
-            basicFrontEnd: "html-css-js",
-            python: "python",
-            java: "java",
-        },
-        projects: <Portfolio> {
-            vue: [
-                {
-                    title: "Cursos Alfaweb",
-                    image: "projects/cursos-alfaweb_project.png",
-                    description: "Vue + Firebase online course app",
-                    link: "https://vue-fb-desafio-latam.web.app",
-                    download: false,
-                },
-                {
-                    title: "E-Library",
-                    image: "projects/e-library_project.png",
-                    description: "Vue + Firebase online library app",
-                    link: "https://vuefire-vite.web.app",
-                    download: false,
-                },
-            ],
-            "html-css-js": [
-                /* {
-                        title: "Suricata",
-                        image: "notyet",
-                        description: "Bootstrap 5 restaurant themed website",
-                        link: "#",
-                        download: false,
-                    }, */
-            ],
-            python: [
-                /* {
-                        title: "Table renamer",
-                        image: "notyet",
-                        description: "Table renamer for Oracle SQL Developer",
-                        link: "#",
-                        download: true,
-                    }, */
-            ],
-            java: [],
-        },
-        texts: <{ [key: string]: ProjectText }>{
-            vue: {
-                subtitle: "Front End!",
-            },
-            "html-css-js": {
-                subtitle: "The main pillars!",
-            },
-            python: {
-                subtitle: "King of data!",
-            },
-            java: {
-                subtitle: "Mine and craft!",
-            },
-        },
-    }),
-    actions: {
-        getSRC(name: string): string {
-            return (new URL(`../assets/img/${name}`, import.meta.url)).toString();
-        },
-        navToggle(): void {
-            document.body.classList.toggle("nav-open");
-        },
-    },
-    getters: {},
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
+import type { AppRouter } from '../../../back-end/src'
+import type { Project } from "../../../back-end/src/entities/Project";
+import type { SkillViewText } from "./interfaces/project";
+import type { Skill } from "../../../back-end/src/entities/Skill";
+import { reactive } from "vue";
+
+export const useGeneralStore = defineStore("general", () => {
+    const { VITE_BACKEND_LOCATION } = import.meta.env
+
+    console.log(VITE_BACKEND_LOCATION);
+    const trpc = createTRPCProxyClient<AppRouter>({
+        links: [
+            httpBatchLink({
+                url: VITE_BACKEND_LOCATION!
+            })
+        ]
+    })
+    const skills: Record<typeof Skill.prototype.slug, Skill> = reactive({})
+    const projects: Record <number, Project[]> = reactive({})
+    const texts: Record<number, SkillViewText> = reactive({})
+
+    const getSRC = (name: string) => {
+        return (new URL(`../assets/img/${name}`, import.meta.url)).toString();
+    }
+    const navToggle = () => document.body.classList.toggle("nav-open");
+
+    (async () => {
+        let fetchedSkills
+        try {
+            fetchedSkills = await trpc.readSkillsWithProjects.query() ?? []
+            fetchedSkills?.forEach(skill => {
+                    const { id, projects: p, subtitle, description } = skill;
+                    projects[id!] = [...p ?? []]
+                    texts[id!] = {
+                        subtitle,
+                        description
+                    }
+                    delete skill.projects
+                    skills[skill.slug] = skill
+                })
+            
+        } catch (err) {
+            console.error(err);
+        }
+    })()
+    
+    
+    return {
+        skills,
+        projects,
+        texts,
+        getSRC,
+        navToggle
+    }
 });

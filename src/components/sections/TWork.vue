@@ -8,15 +8,17 @@
         </header>
         <div class="portfolio">
             <router-link
+                v-for="(skill, i) in Object.values(skills)" :key="`${skill.id}-${i}`"
+                
                 :to="{
                     name: 'skill',
-                    params: { slug: slugs.vue },
+                    params: { slug: skill.slug },
                 }"
                 class="portfolio__item"
             >
                 <TCard
                     class="portfolio__card"
-                    header="Vue"
+                    :header="skill.name"
                     bg-color="--color-light-tr"
                     padding="1em"
                     bd-radius="1em"
@@ -24,94 +26,12 @@
                     <template #img>
                         <img
                             class="card__img"
-                            :src="getSRC(`${slugs.vue}.png`)"
-                            alt="Vue Framework"
+                            :src="getSRC(`${skill.slug}.png`)"
+                            :alt="skill.name"
                         />
                     </template>
 
-                    A JavaScript framework for Front-End development.
-                </TCard>
-            </router-link>
-            <router-link
-                :to="{
-                    name: 'skill',
-                    params: {
-                        slug: slugs.basicFrontEnd,
-                    },
-                }"
-                class="portfolio__item"
-            >
-                <TCard
-                    class="portfolio__card"
-                    header="HTML, CSS & JS"
-                    bg-color="--color-light-tr"
-                    padding="1em"
-                    bd-radius="1em"
-                >
-                    <template #img>
-                        <img
-                            class="card__img"
-                            :src="getSRC(`${slugs.basicFrontEnd}.png`)"
-                            alt="HTML, CSS & JavaScript"
-                        />
-                    </template>
-
-                    The three main pillars of the web. Every web front-end
-                    implements them.
-                </TCard>
-            </router-link>
-            <router-link
-                :to="{
-                    name: 'skill',
-                    params: { slug: slugs.python },
-                }"
-                class="portfolio__item"
-            >
-                <TCard
-                    class="portfolio__card"
-                    header="Python"
-                    bg-color="--color-light-tr"
-                    padding="1em"
-                    bd-radius="1em"
-                    gap="1em"
-                >
-                    <template #img>
-                        <img
-                            class="card__img"
-                            :src="getSRC(`${slugs.python}.png`)"
-                            alt="Python"
-                        />
-                    </template>
-
-                    N°1 language for Machine Learning and AI. There's frameworks
-                    and libraries for doing pretty much anything in it.
-                </TCard>
-            </router-link>
-            <router-link
-                :to="{
-                    name: 'skill',
-                    params: { slug: slugs.java },
-                }"
-                class="portfolio__item"
-            >
-                <TCard
-                    class="portfolio__card"
-                    header="Java"
-                    bg-color="--color-light-tr"
-                    padding="1em"
-                    bd-radius="1em"
-                >
-                    <template #img>
-                        <img
-                            class="card__img"
-                            :src="getSRC(`${slugs.java}.png`)"
-                            alt="Java"
-                        />
-                    </template>
-
-                    One of the most popular languages for software development.
-                    It's wide adoption despite it's steep learning curve serves
-                    as proof of it's reliability.
+                    {{  skill.description  }}
                 </TCard>
             </router-link>
         </div>
@@ -122,5 +42,5 @@
 import { useGeneralStore } from "@stores/generalStore";
 import TCard from "@components/TCard.vue";
 
-const { getSRC, slugs } = useGeneralStore();
+const { getSRC, skills } = useGeneralStore()
 </script>
