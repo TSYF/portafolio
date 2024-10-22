@@ -25,6 +25,7 @@
     /* Transparent colors */
     --color-light-tr: #fff1;
     --color-light-tr-2: #fff7;
+    --color-light-tr-3: #ffffffbb;
     --color-dark-tr: #30303040;
     // --color-accent-tr: #CC717820;
     --color-accent-tr: #16e0bd20;
@@ -92,6 +93,11 @@ strong {
 }
 
 /* Buttons */
+
+.emoji {
+    opacity: 1;
+    color: black;
+}
 
 .btn {
     @extend %undecoratedAnchor;
@@ -162,6 +168,21 @@ h3 {
         &--highlights {
             color: var(--color-accent);
             font-weight: var(--fw-bold);
+        }
+
+        &--maintenance {
+            color: var(--color-light-tr-2);
+            strong {
+                &:nth-of-type(1) {
+                    color: var(--color-light);
+                }
+                &:nth-of-type(2) {
+                    color: var(--color-light-tr-3);
+                }
+                &:nth-of-type(3) {
+                    color: var(--color-accent);
+                }
+            }
         }
     }
 
@@ -450,6 +471,11 @@ h3 {
         flex-direction: column;
         justify-content: space-around;
     }
+}
+
+.maintenance {
+    text-align: center;
+    background-color: var(--color-dark);
 }
 
 /* Footer */

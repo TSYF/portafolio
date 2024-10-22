@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@views/MainView.vue'
-import { Skill } from '../../../back-end/src/entities/Skill';
 
 const routes = [
   {

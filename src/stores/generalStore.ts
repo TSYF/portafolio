@@ -5,7 +5,9 @@ import type { AppRouter } from '../../../back-end/src'
 import type { Project } from "../../../back-end/src/entities/Project";
 import type { SkillViewText } from "./interfaces/project";
 import type { Skill } from "../../../back-end/src/entities/Skill";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
+import type { z } from "zod";
+import configuration from "../../../back-end/src/parsers/configuration";
 
 export const useGeneralStore = defineStore("general", () => {
     const { VITE_BACKEND_LOCATION } = import.meta.env
@@ -18,20 +20,29 @@ export const useGeneralStore = defineStore("general", () => {
             })
         ]
     })
+
+    type Config = z.infer<typeof configuration>
+    let configs: Config = reactive(configuration.safeParse({}).data!)
+    const config = computed(() => configs)
     const skills: Record<typeof Skill.prototype.slug, Skill> = reactive({})
     const projects: Record <number, Project[]> = reactive({})
     const texts: Record<number, SkillViewText> = reactive({})
 
-    const getSRC = (name: string) => {
-        return (new URL(`../assets/img/${name}`, import.meta.url)).toString();
-    }
+    const getSRC = (name: string) => new URL(`../assets/img/${name}`, import.meta.url).toString();
     const navToggle = () => document.body.classList.toggle("nav-open");
 
-    (async () => {
-        let fetchedSkills
-        try {
-            fetchedSkills = await trpc.readSkillsWithProjects.query() ?? []
-            fetchedSkills?.forEach(skill => {
+    trpc.readSiteConfig.query()
+        .then(conf => conf ?? {})
+        .then(conf => configs = conf)
+        .catch(err => {
+            console.warn("Error fetching site state");
+            console.error(err);
+        })
+        
+    trpc.readSkillsWithProjects.query()
+        .then(sks => sks ?? [])
+        .then(fetchedSkills => {
+            fetchedSkills.forEach(skill => {
                     const { id, projects: p, subtitle, description } = skill;
                     projects[id!] = [...p ?? []]
                     texts[id!] = {
@@ -41,14 +52,13 @@ export const useGeneralStore = defineStore("general", () => {
                     delete skill.projects
                     skills[skill.slug] = skill
                 })
-            
-        } catch (err) {
+        }).catch(err => {
+            console.warn("Error fetching skills with projects");
             console.error(err);
-        }
-    })()
-    
+        })
     
     return {
+        config,
         skills,
         projects,
         texts,
