@@ -22,9 +22,19 @@
             </p>
         </div>
         <img
-            src="@img/tomas-dev_2.jpeg"
+            :src="image"
             alt="Tomas explaining something while looking at the camera man"
             class="about__img"
         />
     </section>
 </template>
+
+<script setup lang="ts">
+
+defineProps({
+    image: {
+        type: String,
+        default: import.meta.env.VITE_PICTURE_2
+    }
+});
+</script>

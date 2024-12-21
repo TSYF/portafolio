@@ -325,8 +325,11 @@ h3 {
 
     &__img {
         box-shadow: var(--bs);
-        border-top-right-radius: 80%;
-        border-bottom-left-radius: 80%;
+        clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        border-bottom-left-radius: 1em;
     }
 }
 

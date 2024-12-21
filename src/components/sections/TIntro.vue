@@ -33,7 +33,7 @@
     defineProps({
         image: {
             type: String,
-            default: "tomas-dev_2.jpeg"
+            default: import.meta.env.VITE_PICTURE_1
         }
     });
 </script>
